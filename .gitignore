@@ -1,0 +1,8 @@
+env
+.env
+.pytest_cache
+migrations
+routes/__pycache__
+tests/__pycache__
+__pycache__
+static/uploads
