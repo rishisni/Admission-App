@@ -19,7 +19,6 @@ def save_file(file):
     return filename
 
 def generate_admission_pdf(application):
-    
     os.makedirs(Config.UPLOAD_FOLDER, exist_ok=True)
     filename = f'admission_{application.id}.pdf'
     file_path = os.path.join(Config.UPLOAD_FOLDER, filename)
@@ -27,6 +26,7 @@ def generate_admission_pdf(application):
     c = canvas.Canvas(file_path, pagesize=letter)
     width, height = letter
 
+    # Header
     c.setFont("Helvetica-Bold", 20)
     c.setFillColor(colors.HexColor("#0F2437"))
     c.drawCentredString(width/2, height - 50, "XYZ University / Admission Office")
@@ -35,10 +35,12 @@ def generate_admission_pdf(application):
     c.setLineWidth(2)
     c.line(50, height - 60, width - 50, height - 60)
 
+    # Title
     c.setFont("Helvetica-Bold", 16)
     c.setFillColor(colors.black)
     c.drawCentredString(width/2, height - 100, "Admission Letter")
 
+    # Student Details
     c.setFont("Helvetica", 12)
     y = height - 140
     line_height = 20
@@ -61,9 +63,23 @@ def generate_admission_pdf(application):
         c.drawString(200, y, str(value))
         y -= line_height
 
-    c.setFont("Helvetica-Bold", 12)
-    c.drawString(80, 100, "Authorized Signature:")
-    c.line(200, 98, 400, 98)  
+    # Footer - Stamp Style
+    stamp_center_x = 350
+    stamp_center_y = 100
+    stamp_radius = 50
+
+    # Draw circle for stamp
+    c.setLineWidth(2)
+    c.setStrokeColor(colors.red)
+    c.circle(stamp_center_x, stamp_center_y, stamp_radius, stroke=1, fill=0)
+
+    # Draw text inside stamp
+    c.setFont("Helvetica-Bold", 10)
+    c.setFillColor(colors.red)
+    c.drawCentredString(stamp_center_x, stamp_center_y + 10, "Authorized")
+    c.drawCentredString(stamp_center_x, stamp_center_y - 5, "Signature")
+    c.drawCentredString(stamp_center_x, stamp_center_y - 20, "Rishabh")
+    c.drawCentredString(stamp_center_x, stamp_center_y - 35, datetime.now().strftime("%d-%m-%Y"))
 
     c.save()
 
