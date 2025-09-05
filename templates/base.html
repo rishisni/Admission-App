@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Admission Portal{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #fff;
+            color: #000;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .navbar-custom {
+            background-color: #1f1f1f;
+        }
+        .navbar-custom .navbar-brand {
+            color: #fff;
+            font-weight: bold;
+        }
+        .navbar-custom .btn {
+            margin-left: 10px;
+        }
+        .container {
+            flex: 1;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        .footer {
+            background-color: #1f1f1f;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+        }
+        .btn-custom {
+            background-color: #0F2437;
+            color: white;
+            border: none;
+        }
+        .btn-custom:hover {
+            background-color: #162f4f;
+        }
+    </style>
+    {% block head %}{% endblock %}
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container">
+        <a class="navbar-brand" href="{{ url_for('main.home') }}">Admission Portal</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a href="{{ url_for('student.apply') }}" class="btn btn-custom">Apply</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('student.track') }}" class="btn btn-custom">Track Application</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('admin.dashboard') }}" class="btn btn-custom">Admin</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }} mt-3" role="alert">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+    {% block content %}{% endblock %}
+</div>
+
+<div class="footer mt-auto">
+    &copy; {{ current_year }} Admission Portal. All rights reserved.
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

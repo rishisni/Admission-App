@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Application Submitted{% endblock %}
+
+{% block content %}
+<div class="text-center mt-5">
+    <h2>Thank you for submitting your application!</h2>
+    <p>Your application has been successfully received.</p>
+    <p><strong>Your Application ID: {{ app_id }}</strong></p>
+    <p>Use this ID along with your email to track your application status.</p>
+    <a href="{{ url_for('student.track') }}" class="btn btn-primary mt-3">Track Application</a>
+</div>
+{% endblock %}

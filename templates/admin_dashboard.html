@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="mt-5">
+    <h2 class="mb-4">Admin Dashboard - Review Applications</h2>
+
+    {% if applications %}
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Academic Details</th>
+                <th>Status</th>
+                <th>Documents</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for app in applications %}
+            <tr>
+                <td>{{ app.id }}</td>
+                <td>{{ app.name }}</td>
+                <td>{{ app.email }}</td>
+                <td>{{ app.phone }}</td>
+                 <td>{{ app.academic_details }}</td>
+                <td>
+                    {% if app.status == 'Pending' %}
+                    <span class="badge bg-warning text-dark">Pending</span>
+                    {% elif app.status == 'Approved' %}
+                    <span class="badge bg-success">Approved</span>
+                    {% else %}
+                    <span class="badge bg-danger">Rejected</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if app.id_proof %}
+                    <a href="{{ url_for('static', filename='uploads/' ~ app.id_proof) }}" target="_blank"
+                        class="btn btn-sm btn-info mb-1">ID Proof</a>
+                    {% endif %}
+                    {% if app.degree_certificate %}
+                    <a href="{{ url_for('static', filename='uploads/' ~ app.degree_certificate) }}" target="_blank"
+                        class="btn btn-sm btn-info mb-1">Degree Cert.</a>
+                    {% endif %}
+                </td>
+
+                <td>
+                    {% if app.status == 'Pending' %}
+                    <a href="{{ url_for('admin.approve', app_id=app.id) }}" class="btn btn-success btn-sm">Approve</a>
+                    <a href="{{ url_for('admin.reject', app_id=app.id) }}" class="btn btn-danger btn-sm">Reject</a>
+                    {% elif app.status == 'Approved' %}
+                    <a href="{{ url_for('student.download_pdf', app_id=app.id) }}"
+                        class="btn btn-primary btn-sm">Download PDF</a>
+                    {% else %}
+                    <span class="text-muted">No actions</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No applications submitted yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

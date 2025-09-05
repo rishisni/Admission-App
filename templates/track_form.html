@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Track Application{% endblock %}
+
+{% block content %}
+<div class="mt-5">
+    <h3>Track Your Application</h3>
+    <form method="POST">
+        <div class="mb-3">
+            <label for="identifier" class="form-label">Application ID or Email</label>
+            <input type="text" class="form-control" name="identifier" placeholder="Enter Application ID or Email" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Track</button>
+    </form>
+</div>
+{% endblock %}

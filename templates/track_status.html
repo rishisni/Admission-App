@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Application Status{% endblock %}
+
+{% block content %}
+<div class="mt-5 text-center">
+    <h3>Application Status</h3>
+    <p><strong>Name:</strong> {{ application.name }}</p>
+    <p><strong>Status:</strong> {{ application.status }}</p>
+
+    {% if application.status == 'Approved' %}
+        <a href="{{ url_for('student.download_pdf', app_id=application.id) }}" class="btn btn-success mt-3">
+            Download Admission Letter
+        </a>
+    {% elif application.status == 'Rejected' %}
+        <p class="mt-3 text-danger">Good luck! Your application was not approved this time.</p>
+    {% else %}
+        <p class="mt-3 text-warning">Your application is still under review. Please check back later.</p>
+    {% endif %}
+</div>
+{% endblock %}
